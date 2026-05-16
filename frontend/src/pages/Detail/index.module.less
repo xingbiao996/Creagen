@@ -1,26 +1,56 @@
 .detailContainer {
-  padding: 24px 0;
+  padding: var(--spacing-lg) 0;
   max-width: 1200px;
   margin: 0 auto;
+  
+  @media (max-width: 991px) {
+    max-width: 100%;
+    padding: var(--spacing-md) 0;
+  }
+  
+  @media (max-width: 767px) {
+    padding: var(--spacing-sm) 0;
+  }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-lg);
+  
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
 }
 
 .mainCard {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  
+  @media (max-width: 767px) {
+    border-radius: 6px;
+  }
 }
 
 .sectionTitle {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  
+  @media (max-width: 767px) {
+    margin-bottom: var(--spacing-sm);
+    
+    :global {
+      .arco-typography {
+        font-size: 16px !important;
+      }
+    }
+  }
 }
 
 .dimensionCard {
@@ -33,12 +63,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-sm);
   }
 
   .dimDesc {
     margin: 0;
     color: var(--color-text-2);
+    font-size: 14px;
+    
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    padding: var(--spacing-sm);
   }
 }
 
@@ -48,19 +87,31 @@
   text-align: center;
   
   .scoreWrapper {
-    margin: 16px 0;
+    margin: var(--spacing-md) 0;
     color: var(--arcoblue-6);
     
     .scoreNum {
       font-size: 48px;
       font-weight: 700;
       line-height: 1;
+      
+      @media (max-width: 767px) {
+        font-size: 36px;
+      }
     }
     
     .scoreUnit {
       font-size: 16px;
       margin-left: 4px;
+      
+      @media (max-width: 767px) {
+        font-size: 14px;
+      }
     }
+  }
+  
+  @media (max-width: 767px) {
+    border-radius: 6px;
   }
 }
 
@@ -74,9 +125,34 @@
     color: var(--color-text-2);
     
     li {
-      margin-bottom: 12px;
+      margin-bottom: var(--spacing-sm);
       &:last-child {
         margin-bottom: 0;
+      }
+    }
+  }
+  
+  @media (max-width: 767px) {
+    border-radius: 6px;
+    
+    .actionList {
+      font-size: 13px;
+    }
+  }
+}
+
+/* Dimension Grid Responsive */
+@media (max-width: 767px) {
+  .detailContainer {
+    :global {
+      .arco-row {
+        flex-direction: column;
+      }
+      
+      .arco-col {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: var(--spacing-sm);
       }
     }
   }

@@ -1,6 +1,41 @@
-/* Global VI Styles */
+/* Global Styles & Responsive System */
 
-/* Primary color overrides if needed, though vite.config handles Arco's modifyVars */
+/* ============================================
+   Responsive Breakpoint System
+   Based on Arco Design Grid System
+   ============================================ */
+:root {
+  /* Breakpoint Reference (for documentation) */
+  /* xs: 0-575px    - Mobile Portrait */
+  /* sm: 576-767px  - Mobile Landscape / Small Tablet */
+  /* md: 768-991px  - Tablet */
+  /* lg: 992-1199px - Small Desktop */
+  /* xl: 1200-1399px - Desktop */
+  /* xxl: 1400px+   - Large Desktop */
+  
+  /* Responsive Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  
+  /* Responsive Container Widths */
+  --container-xs: 100%;
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-xxl: 1320px;
+  
+  /* Sidebar Widths */
+  --sider-width: 220px;
+  --sider-collapsed-width: 48px;
+  --header-height: 60px;
+  --header-height-mobile: 56px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -9,9 +44,118 @@ body {
   padding: 0;
   background-color: var(--color-bg-1);
   color: var(--color-text-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 
-  Chinese typography global adjustments if needed. 
-  The Quotes component handles the quotes manually.
+/* ============================================
+   Responsive Mixins (Use in Less files)
+   ============================================ */
+/* Usage in Less files:
+   @media (max-width: 575px) { ... }  // xs only
+   @media (min-width: 576px) { ... }  // sm and up
+   @media (min-width: 768px) { ... }  // md and up
+   @media (min-width: 992px) { ... }  // lg and up
+   @media (min-width: 1200px) { ... } // xl and up
+   @media (min-width: 1400px) { ... } // xxl and up
 */
+
+/* ============================================
+   Global Responsive Utilities
+   ============================================ */
+.hide-xs { display: none !important; }
+.hide-sm { display: none !important; }
+.hide-md { display: none !important; }
+.hide-lg { display: none !important; }
+.hide-xl { display: none !important; }
+
+@media (min-width: 576px) {
+  .hide-xs { display: block !important; }
+  .hide-sm-only { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .hide-sm { display: block !important; }
+  .hide-md-only { display: none !important; }
+}
+
+@media (min-width: 992px) {
+  .hide-md { display: block !important; }
+  .hide-lg-only { display: none !important; }
+}
+
+@media (min-width: 1200px) {
+  .hide-lg { display: block !important; }
+  .hide-xl-only { display: none !important; }
+}
+
+@media (min-width: 1400px) {
+  .hide-xl { display: block !important; }
+}
+
+/* ============================================
+   Mobile-First Responsive Typography
+   ============================================ */
+@media (max-width: 575px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 18px !important; }
+  h4 { font-size: 16px !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* ============================================
+   Touch Device Optimizations
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase tap targets on touch devices */
+  button, 
+  a, 
+  [role="button"],
+  .arco-menu-item,
+  .arco-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  *:hover {
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* Chinese typography global adjustments if needed. 
+   The Quotes component handles the quotes manually.*/
