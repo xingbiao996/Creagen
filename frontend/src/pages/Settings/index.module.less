@@ -8,6 +8,12 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
+  
+  @media (max-width: 767px) {
+    &:hover {
+      transform: none;
+    }
+  }
 }
 
 .providerCardActive {
@@ -24,10 +30,45 @@
 
 .providerIcon {
   font-size: 28px;
-  margin-bottom: 12px;
+  margin-bottom: var(--spacing-sm);
   color: var(--color-text-2);
+  
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 }
 
 .providerCardActive .providerIcon {
   color: var(--color-primary-6);
+}
+
+/* Settings Page Responsive */
+.settingsContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) 0;
+  
+  @media (max-width: 991px) {
+    max-width: 100%;
+    padding: var(--spacing-md) 0;
+  }
+  
+  @media (max-width: 767px) {
+    padding: var(--spacing-sm) 0;
+  }
+}
+
+.providerGrid {
+  margin-bottom: var(--spacing-lg);
+  
+  @media (max-width: 767px) {
+    margin-bottom: var(--spacing-md);
+    
+    :global {
+      .arco-col {
+        width: 100% !important;
+        margin-bottom: var(--spacing-sm);
+      }
+    }
+  }
 }

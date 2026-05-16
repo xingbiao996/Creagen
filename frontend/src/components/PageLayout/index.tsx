@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown, Space } from '@arco-design/web-react';
+import { Layout, Menu, Breadcrumb, Button, Avatar, Dropdown } from '@arco-design/web-react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { 
   IconHistory, 
@@ -10,7 +10,8 @@ import {
   IconMoonFill,
   IconSunFill,
   IconUser,
-  IconSearch
+  IconSearch,
+  IconMenu
 } from '@arco-design/web-react/icon';
 import GlobalLoading from '@/components/GlobalLoading';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -34,12 +35,22 @@ const PageLayout: React.FC = () => {
   const { fetchSettings } = useSettingsStore();
   const { theme, setTheme } = useAppStore();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
 
-  // Determine breadcrumb
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const currentPath = location.pathname;
   const breadcrumbName = routeNameMap[currentPath] || (currentPath.startsWith('/detail/') ? '配方卡详情' : '');
 
@@ -48,38 +59,58 @@ const PageLayout: React.FC = () => {
     window.dispatchEvent(event);
   };
 
+  const handleNavigate = (key: string) => {
+    navigate(key);
+    setMobileMenuVisible(false);
+  };
+
+  const menuItems = [
+    { key: '/', icon: <IconHome />, label: '主页' },
+    { key: '/favorites', icon: <IconStar />, label: '收藏' },
+    { key: '/history', icon: <IconHistory />, label: '历史' },
+    { key: '/settings', icon: <IconSettings />, label: '设置' },
+  ];
+
   return (
     <Layout className={styles.layout}>
       <GlobalLoading />
       <GlobalSearch />
       
+      {/* Mobile Menu Overlay */}
+      {mobileMenuVisible && (
+        <div 
+          className={styles.siderOverlay} 
+          onClick={() => setMobileMenuVisible(false)}
+        />
+      )}
+      
       <Sider 
-        className={styles.sider}
-        collapsible
-        collapsed={collapsed}
-        onCollapse={setCollapsed}
+        className={`${styles.sider} ${mobileMenuVisible ? styles.siderVisible : ''}`}
+        collapsible={!isMobile}
+        collapsed={isMobile ? false : collapsed}
+        onCollapse={isMobile ? () => {} : setCollapsed}
         width={220}
       >
-        <div className={styles.logo} onClick={() => navigate('/')}>
-          <IconThunderbolt style={{ color: 'var(--arcoblue-6)', fontSize: 24, marginRight: collapsed ? 0 : 8 }} />
-          {!collapsed && <span className={styles.logoText}>Creagen</span>}
+        <div className={styles.logo} onClick={() => handleNavigate('/')}>
+          <IconThunderbolt style={{ color: 'var(--arcoblue-6)', fontSize: 24, marginRight: (isMobile ? false : collapsed) ? 0 : 8 }} />
+          {!(isMobile ? false : collapsed) && <span className={styles.logoText}>Creagen</span>}
         </div>
         <Menu
           selectedKeys={[currentPath.startsWith('/detail/') ? '/' : currentPath]}
-          onClickMenuItem={(key) => navigate(key)}
+          onClickMenuItem={handleNavigate}
           className={styles.menu}
         >
           <MenuItem key="/">
-            <IconHome /> {!collapsed && '主页'}
+            <IconHome /> {!(isMobile ? false : collapsed) && '主页'}
           </MenuItem>
           <MenuItem key="/favorites">
-            <IconStar /> {!collapsed && '我的收藏'}
+            <IconStar /> {!(isMobile ? false : collapsed) && '我的收藏'}
           </MenuItem>
           <MenuItem key="/history">
-            <IconHistory /> {!collapsed && '历史记录'}
+            <IconHistory /> {!(isMobile ? false : collapsed) && '历史记录'}
           </MenuItem>
           <MenuItem key="/settings">
-            <IconSettings /> {!collapsed && '设置'}
+            <IconSettings /> {!(isMobile ? false : collapsed) && '设置'}
           </MenuItem>
         </Menu>
       </Sider>
@@ -87,6 +118,14 @@ const PageLayout: React.FC = () => {
       <Layout>
         <Header className={styles.header}>
           <div className={styles.headerLeft}>
+            {/* Mobile Menu Button */}
+            <div 
+              className={styles.mobileMenuBtn}
+              onClick={() => setMobileMenuVisible(true)}
+            >
+              <IconMenu style={{ fontSize: 20 }} />
+            </div>
+            
             <Breadcrumb>
               <Breadcrumb.Item key="home">Creagen</Breadcrumb.Item>
               {breadcrumbName && <Breadcrumb.Item key="current">{breadcrumbName}</Breadcrumb.Item>}
@@ -129,6 +168,24 @@ const PageLayout: React.FC = () => {
           </Content>
         </Layout>
       </Layout>
+      
+      {/* Mobile Bottom Navigation */}
+      <div className={styles.bottomNav}>
+        {menuItems.map(item => (
+          <div
+            key={item.key}
+            className={`${styles.bottomNavItem} ${
+              (currentPath.startsWith('/detail/') ? '/' : currentPath) === item.key 
+                ? styles.bottomNavItemActive 
+                : ''
+            }`}
+            onClick={() => handleNavigate(item.key)}
+          >
+            {item.icon}
+            <span className={styles.bottomNavLabel}>{item.label}</span>
+          </div>
+        ))}
+      </div>
     </Layout>
   );
 };

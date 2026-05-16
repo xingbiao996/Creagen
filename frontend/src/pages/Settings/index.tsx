@@ -55,7 +55,6 @@ const Settings: React.FC = () => {
   useEffect(() => {
     form.setFieldsValue({ baseUrl, apiKey, model });
     
-    // Auto-detect provider based on URL
     if (baseUrl === 'https://ark.cn-beijing.volces.com/api/v3') {
       setProvider('volcengine');
     } else if (baseUrl === 'https://api.openai.com/v1') {
@@ -86,13 +85,13 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: '24px 0' }}>
+    <div className={styles.settingsContainer}>
       <Typography.Title heading={3} style={{ marginBottom: 24 }}>AI 引擎配置</Typography.Title>
       
       <Typography.Text type="secondary" style={{ marginBottom: 12, display: 'block' }}>选择模型提供商</Typography.Text>
-      <Row gutter={16} style={{ marginBottom: 24 }}>
+      <Row gutter={[16, 16]} className={styles.providerGrid}>
         {PROVIDERS.map(p => (
-          <Col span={8} key={p.id}>
+          <Col xs={24} sm={24} md={8} key={p.id}>
             <Card 
               className={`${styles.providerCard} ${provider === p.id ? styles.providerCardActive : ''}`}
               onClick={() => handleProviderSelect(p.id as ProviderType)}
