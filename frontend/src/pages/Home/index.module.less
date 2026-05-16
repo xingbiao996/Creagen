@@ -1,0 +1,92 @@
+.homeContainer {
+  position: relative;
+}
+
+.stickyInputBar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: rgba(var(--color-bg-2-rgb, 255, 255, 255), 0.85);
+  backdrop-filter: blur(10px);
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  :global {
+    .arco-input-inner-wrapper {
+      border-radius: 8px;
+    }
+  }
+}
+
+.mainFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.recipeCard {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.recipeCover {
+  height: 160px;
+  background: linear-gradient(135deg, var(--color-primary-light-3), var(--color-primary-light-1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebarCard {
+  border-radius: 8px;
+}
+
+.creatorItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.creatorInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.creatorDesc {
+  font-size: 12px;
+  color: var(--color-text-3);
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

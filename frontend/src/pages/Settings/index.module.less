@@ -1,0 +1,33 @@
+.providerCard {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  height: 100%;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.providerCardActive {
+  border-color: var(--color-primary-light-4);
+  background-color: var(--color-primary-light-1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  :global {
+    .arco-typography {
+      color: var(--color-primary-6);
+    }
+  }
+}
+
+.providerIcon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: var(--color-text-2);
+}
+
+.providerCardActive .providerIcon {
+  color: var(--color-primary-6);
+}

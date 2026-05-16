@@ -1,0 +1,44 @@
+.searchModal {
+  :global {
+    .arco-modal {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .arco-modal-header {
+      display: none;
+    }
+    .arco-modal-body {
+      padding: 0;
+    }
+  }
+}
+
+.searchInput {
+  :global {
+    .arco-input-inner-wrapper {
+      padding: 16px 24px;
+      background-color: var(--color-bg-2);
+      border: none;
+      border-bottom: 1px solid var(--color-border);
+      border-radius: 0;
+      font-size: 16px;
+      
+      &.arco-input-focus {
+        box-shadow: none;
+        background-color: var(--color-bg-2);
+      }
+    }
+    .arco-input {
+      font-size: 18px;
+    }
+  }
+}
+
+.hints {
+  padding: 12px 24px;
+  background-color: var(--color-bg-1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
